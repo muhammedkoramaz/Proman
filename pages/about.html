@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Proman</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+
+<style>
+    body {
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    #btn-div {
+        -webkit-app-region: no-drag;
+        position: fixed;
+        top: 0px;
+        right: 6px;
+        padding: 5px;
+    }
+    
+    #close-btn {
+        background-color: #f7f7f7;
+        border: none;
+        outline: none;
+        font-size: 24px;
+        color: #24292e;
+    }
+    
+    #close-btn:hover {
+        color: #e43f5a;
+    }
+    
+    #close-btn:active {
+        opacity: 0.6;
+    }
+    
+    #container {
+        background-color: whitesmoke;
+        text-align: center;
+        padding: 10px;
+        margin-top: 45px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    
+    p {
+        display: inline;
+        margin: 10px;
+    }
+    
+    table {
+        font-family: arial, sans-serif;
+        width: 100%;
+    }
+    
+    td,
+    th {
+        text-align: left;
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    td img:hover {
+        transform: translateY(-2px);
+        transition: .1s;
+    }
+    
+    td img:active {
+        opacity: 0.6;
+    }
+</style>
+
+<body>
+    <div>
+        <div id="btn-div">
+            <button id="close-btn">x</button>
+        </div>
+        <div id="container">
+            <h3 style="text-align: left;">Yazarlar</h3>
+            <hr style="border-top: 1px solid #1089ff;">
+            <table>
+                <tr>
+                    <td>A.Emre Esen</td>
+                    <td>emreesen27@gmail.com</td>
+                    <td><img src="../images/linkedin.png" width="20" height="20" onclick="Click('1')"></td>
+                    <td><img src="../images/github.png" width="20" height="20" id="1-lkd" onclick="Click('2')"></td>
+                </tr>
+                <tr>
+                    <td>Muhammed Koramaz</td>
+                    <td>muhammedkoramaz@gmail.com</td>
+                    <td><img src="../images/linkedin.png" width="20" height="20" id="2-lkd" onclick="Click('3')"></td>
+                    <td><img src="../images/github.png" width="20" height="20" id="2-git" onclick="Click('4')"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script>
+    const electron = window.require('electron');
+    const ipcRenderer = electron.ipcRenderer;
+    const shell = require('electron').shell;
+
+    var closeBtn = document.getElementById("close-btn");
+    closeBtn.addEventListener('click', () => {
+        ipcRenderer.send('close-about');
+    })
+
+    function Click(value) {
+        if (value === '1')
+            shell.openExternal("https://www.linkedin.com/in/aydınemreesen96");
+        else if (value === '2')
+            shell.openExternal("https://github.com/emreesen27");
+        else if (value === '3')
+            shell.openExternal("https://www.linkedin.com/in/muhammedkoramaz");
+        else
+            shell.openExternal("https://github.com/muhammedkoramaz");
+    }
+</script>
+
+</html>

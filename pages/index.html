@@ -1,0 +1,88 @@
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Proman</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="../style/main.css">
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../scripts/app.js"></script>
+
+    <script>
+        if (window.module) module = window.module;
+    </script>
+
+</head>
+
+<body>
+    <div id="page">
+
+        <div id="maincontent">
+
+            <div id="myproject">
+                <div class="flex-box">
+                    <p id="project-topic">Projelerinizi ekleyin ve yönetin...</p>
+                    <button id="project-btn" onclick="addProjectBtn()">Proje Ekle</button>
+                </div>
+
+                <div id="no-project-div">
+                    <img id="no-project-img" src="../images/loading.gif" width="64" height="64">
+                    <p id="no-project-p">Yükleniyor...</p>
+                </div>
+            </div>
+
+            <div id="myfiles">Dosyalarım</div>
+            <div id="todo">Notlar</div>
+        </div>
+
+        <div id="menuleftcontent">
+            <div style="text-align: center;">
+                <h2 id="project-name">ProMan</h1>
+            </div>
+
+            <li class="menu-item">
+                <a href="#myproject" class="menu-item-act">
+                    <img class="nav-icon" src="../images/user.png" width="16" height="16">Projelerim
+                </a>
+
+                <a href="#myfiles">
+                    <img class="nav-icon" src="../images/folder.png" width="16" height="16">Dosyalarım
+                </a>
+
+                <a href="#todo">
+                    <img class="nav-icon" src="../images/note.png" width="16" height="16">Notlar
+                </a>
+            </li>
+
+            <hr class="menu-sep">
+
+            <li class="menu-item-div">
+                <a href="#" onclick="settingsClick()">
+                    <img class="nav-icon" src="../images/settings.png" width="16" height="16">Ayarlar
+                </a>
+                <a href="#" onclick="feedbackClick()">
+                    <img class="nav-icon" src="../images/feed.png" width="16" height="16">Geri Bildirim
+                </a>
+                <a href="#" onclick="aboutClick()">
+                    <img class="nav-icon" src="../images/info.png" width="16" height="16">Hakkımızda
+                </a>
+            </li>
+
+            <div id="version-container">
+                <p id="version-text">Version 1.0.0</p>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="../scripts/controller.js"></script>
+</body>
+
+</html>

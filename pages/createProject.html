@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 3px;
+        }
+        
+        p {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        input:focus {
+            outline-color: #24292e;
+        }
+        
+        button {
+            color: white;
+            padding: 14px 20px;
+            margin: 3px;
+            border: none;
+            cursor: pointer;
+            width: 45%;
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            padding: 16px;
+        }
+        
+        .buttons {
+            padding: 10px 10px;
+            overflow: hidden;
+        }
+        
+        .btn1,
+        .btn2 {
+            display: block;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        
+        .btn1:active {
+            background-color: darkred;
+        }
+        
+        .btn2:active {
+            background-color: #1089ff;
+        }
+        
+        .btn1 {
+            float: left;
+            background-color: #e43f5a;
+        }
+        
+        .btn2 {
+            float: right;
+            background-color: #24292e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <p>Projenizi Ekleyin</p>
+        <input id="project-name" type="text" placeholder="Proje adını giriniz..." name="pid" required maxlength="40">
+        <input id="project-desc" type="text" placeholder="Projenizi açıklayınız... " name="pdc" required maxlength="70">
+
+        <div class="buttons">
+            <button class="btn1" onclick="cancelProjectBtn()">Vazgeç</button>
+            <button class="btn2" onclick="saveProjectBtn()">Kaydet</button>
+        </div>
+    </div>
+
+    <script>
+        const electron = window.require('electron');
+        const ipcRenderer = electron.ipcRenderer;
+
+        function cancelProjectBtn() {
+            ipcRenderer.send('addProjectBtnClose');
+        }
+
+        function saveProjectBtn() {
+            var projectName = document.querySelector("#project-name").value;
+            var projectDesc = document.querySelector("#project-desc").value;
+
+            var projectData = {
+                name: projectName,
+                desc: projectDesc
+            };
+
+            if (projectName.length === 0 || projectDesc.length === 0) {
+                alert("Lütfen eksik yerleri doldurunuz !")
+            } else {
+                ipcRenderer.send('addProjectBtnSave', projectData);
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
