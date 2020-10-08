@@ -47,11 +47,23 @@ function insertProject(projectName, projectDesc, currentTime) {
     project.time = currentTime;
     if (db.valid('projects', appPath)) {
         db.insertTableContent('projects', appPath, project, (succ, msg) => {
-            if (succ) {
+            if (succ)
                 createProjectDom(projectName, projectDesc, currentTime);
-            }
+            else
+                throw msg;
         })
     }
+}
+
+function deleteProject(wrapID, projectName) {
+    db.deleteRow('projects', appPath, {
+        'name': projectName
+    }, (succ, msg) => {
+        if (succ)
+            document.getElementById(wrapID).remove();
+        else
+            throw msg
+    });
 }
 
 function getData() {
@@ -80,6 +92,7 @@ function createProjectDom(projectName, projectDesc, currentTime) {
 
     var wrap = document.createElement("div");
     wrap.className = "wrap-collabsible";
+    wrap.id = "wrap" + projectName;
 
     var input = document.createElement("input");
     input.id = projectName;
@@ -94,6 +107,10 @@ function createProjectDom(projectName, projectDesc, currentTime) {
     var dltBtn = document.createElement("button");
     dltBtn.className = "dlt-btn";
     dltBtn.innerHTML = "<img src='../images/delete.png'>";
+    dltBtn.addEventListener("click", function () {
+        deleteProject(wrap.id, projectName);
+    });
+
 
     var edtBtn = document.createElement("button");
     edtBtn.className = "edt-btn";
