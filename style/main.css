@@ -137,6 +137,7 @@
     border-radius: 5px;
     font-size: 15px;
     outline: none;
+    cursor: pointer;
 }
 
 #project-btn:hover {
@@ -211,6 +212,7 @@ input[type='checkbox'] {
     position: absolute;
     right: 20;
     transition: .1s;
+    cursor: pointer;
 }
 
 .dlt-btn:hover,
@@ -230,6 +232,7 @@ input[type='checkbox'] {
     position: absolute;
     right: 50;
     transition: .1s;
+    cursor: pointer;
 }
 
 .lbl-toggle:hover {
