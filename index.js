@@ -1,9 +1,14 @@
 const {
     app,
     BrowserWindow,
-    ipcMain,
-    Menu
-} = require('electron')
+    MaipcMainMain,
+    Menu,
+    dialog,
+    ipcMain
+} = require('electron');
+const { data } = require('jquery');
+
+var os = require('os') //file-path için gerekli
 
 let mainWin, aboutWin, settingsWin, feedbackWin, addProjectWin;
 let abaoutOpen = false,
@@ -147,28 +152,28 @@ app.whenReady().then(createWindow);
 app.allowRendererProcessReuse = false;
 
 
-ipcMain.on('open-settings', function () {
+ipcMain.on('open-settings', function() {
     if (!settingsOpen && !feedbackOpen && !abaoutOpen)
         createSettingsPage();
 })
 
-ipcMain.on('open-feedback', function () {
+ipcMain.on('open-feedback', function() {
     if (!settingsOpen && !feedbackOpen && !abaoutOpen)
         createFeedPage();
 })
 
-ipcMain.on('open-about', function () {
+ipcMain.on('open-about', function() {
     if (!settingsOpen && !feedbackOpen && !abaoutOpen)
         createAboutPage();
 })
 
 
-ipcMain.on('open-addProjectPopup', function () {
+ipcMain.on('open-addProjectPopup', function() {
     if (!addProjectOpen)
         createAddProject();
 })
 
-ipcMain.on('addProjectBtnClose', function () {
+ipcMain.on('addProjectBtnClose', function() {
     addProjectWin.close();
 })
 
@@ -179,9 +184,37 @@ ipcMain.on('addProjectBtnSave', (err, data) => {
     }
 })
 
-ipcMain.on('close-about', function () {
+ipcMain.on('close-about', function() {
     aboutWin.close();
 })
+
+ipcMain.on('open-file-dialog-for-file', function(event) {
+    //Platform kontrol
+    if (os.platform() === 'linux' || os.platform() === 'win32') {
+        dialog.showOpenDialog({
+            properties: ['openFile']
+
+
+        }).then((data) => {
+            if (data.filePaths.length > 0) {
+                event.sender.send('selected-file', data.filePaths)
+            }
+
+        });
+
+    } else {
+        //mac için
+        dialog.showOpenDialog({
+            properties: ['openFile', 'openDirectory']
+        }, function(files) {
+            if (files) {
+                event.sender.send('selected-file', files[0]);
+            }
+        })
+    }
+})
+
+
 
 /*
 var nodeConsole = require('console');
